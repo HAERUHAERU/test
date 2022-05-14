@@ -39,6 +39,8 @@ function onOverlayDataUpdate(e) {
     }
 }
 
+startOverlayEvents();
+
 function update(lastDPS, lastHPS) {
     if (lastDPS.zone == 'HAERU') {
         _ = '_P'
