@@ -16,7 +16,15 @@ function onOverlayDataUpdate(e) {
     console.log(onStopFlag)
 
     if (lastDPS.isActive == true) {
-        update(lastDPS, lastHPS)
+        if (view != 'settings') {
+            if (!firstCombat) {
+                $('[name=notice], [name=history]').fadeOut(0)
+                $('[name=main]').fadeIn(0)
+                view = 'main'
+                firstCombat = true
+            }
+            update(lastDPS, lastHPS)
+        }
         onStopFlag = true;
     }
     else {
