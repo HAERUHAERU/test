@@ -24,9 +24,9 @@ function onOverlayDataUpdate(e) {
             firstCombat = true
         }
         setTimeout(function () {
-            saveLog()
             update(lastDPS, lastHPS)
             if (!lastDPS.isActive && !onStopFlag) {
+                saveLog()
                 hiddenTable()
                 onStopFlag = true;
             }
