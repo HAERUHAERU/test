@@ -12,25 +12,30 @@ function onOverlayDataUpdate(e) {
     lastDPS = lastCombat
     lastHPS = new Combatant(e, 'enchps');
 
-    console.log("액티브" + lastDPS.isActive)
-    console.log("플래그" + onStopFlag)
+    console.log(lastDPS.isActive)
+    console.log(onStopFlag)
 
-    if (view != 'settings') {
-
-        if (!firstCombat) {
-            $('[name=notice], [name=history]').fadeOut(0)
-            $('[name=main]').fadeIn(0)
-            view = 'main'
-            firstCombat = true
-        }
-        setTimeout(function () {
-            update(lastDPS, lastHPS)
-            if (!lastDPS.isActive && !onStopFlag) {
+    if (lastDPS.isActive == true) {
+        update(lastDPS, lastHPS)
+        onStopFlag = true;
+    }
+    else {
+        if (!onStopFlag)
+            return;
+        else {
+            if (view != 'settings') {
+                if (!firstCombat) {
+                    $('[name=notice], [name=history]').fadeOut(0)
+                    $('[name=main]').fadeIn(0)
+                    view = 'main'
+                    firstCombat = true
+                }
                 saveLog()
+                update(lastDPS, lastHPS)
                 hiddenTable()
-                onStopFlag = true;
             }
-        }, 1)
+            onStopFlag = false;
+        }
     }
 }
 
