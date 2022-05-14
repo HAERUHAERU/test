@@ -12,34 +12,27 @@ function onOverlayDataUpdate(e) {
     lastDPS = lastCombat
     lastHPS = new Combatant(e, 'enchps');
 
-    console.log(lastDPS.isActive)
-    console.log(onStopFlag)
+    console.log("액티브" + lastDPS.isActive)
+    console.log("플래그" + onStopFlag)
 
-    if (lastDPS.isActive == true) {
-        update(lastDPS, lastHPS)
-        onStopFlag = true;
-    }
-    else {
-        if (!onStopFlag)
-            return;
-        else {
-            if (view != 'settings') {
-                if (!firstCombat) {
-                    $('[name=notice], [name=history]').fadeOut(0)
-                    $('[name=main]').fadeIn(0)
-                    view = 'main'
-                    firstCombat = true
-                }
-                saveLog()
-                update(lastDPS, lastHPS)
-                hiddenTable()
-            }
-            onStopFlag = false;
+    if (view != 'settings') {
+
+        if (!firstCombat) {
+            $('[name=notice], [name=history]').fadeOut(0)
+            $('[name=main]').fadeIn(0)
+            view = 'main'
+            firstCombat = true
         }
+        setTimeout(function () {
+            saveLog()
+            update(lastDPS, lastHPS)
+            if (!lastDPS.isActive && !onStopFlag) {
+                hiddenTable()
+                onStopFlag = true;
+            }
+        }, 1)
     }
 }
-
-startOverlayEvents();
 
 function update(lastDPS, lastHPS) {
     if (lastDPS.zone == 'HAERU') {
